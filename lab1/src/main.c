@@ -1,44 +1,41 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include "../include/functions.h"
 
-int main(){
-	char flag[3];
-	char num_str[25];
-	int num_int;
+int main(int argc, char *argv[]){
+	if (argc != 3){
+            printf("Формат: %s <число> <флаг>\n", argv[0]);
+            return 1;
+    }
 
-	printf("Возможные флаги:\n\n");
-	printf("\t-h - выводит натуральные числа в пределах 100, кратные x\n");
-	printf("\t-p - определяет является ли число x простым; является ли x составным\n");
-	printf("\t-s - разделяет число x на отдельные цифры с/с с основанием 16\n");
-	printf("\t-e - выводит таблицу степеней оснований от 1 до x (x не больше 10)\n");
-	printf("\t-a - вычисляет сумму всех натуральных чисел от 1 до x\n");
-	printf("\t-f - вычисляет факториал x\n\n");
-	printf("Введите число и флаг:\n");
-	scanf("%24s %2s", num_str, flag);
+    int x = atoi(argv[1]);
+    char *flag = argv[2];
 	
-	if (flag[0] != '-' || flag[0] != '/'){
-		printf("Флаг должен начинаться с '-' или '/'");
+	if (flag[0] != '-' && flag[0] != '/'){
+		printf("Флаг должен начинаться с '-' или '/'\n");
 		return 1;
 	}
 	else{
 		switch(flag[1]){
 			case 'h':
-				h_func();
+				h_func(x);
 				break;
 			case 'p':
-				p_func();
+				p_func(x);
 				break;
 			case 's':
-				s_func();
+				s_func(x);
 				break;
 			case 'e':
-				e_func();
+				e_func(x);
 				break;
 			case 'a':
-				a_func();
+				a_func(x);
 				break;
 			case 'f':
-				f_func();
+				f_func(x);
 				break;
 			default:
 				printf("Такого флага не существует\n");
