@@ -10,8 +10,8 @@ int main(int argc, char *argv[]){
             return 1;
     }
 
-    int x = atoi(argv[1]);
-    char *flag = argv[2];
+    const int x = atoi(argv[1]);
+    const char *flag = argv[2];
 	
 	if (flag[0] != '-' && flag[0] != '/'){
 		printf("Флаг должен начинаться с '-' или '/'\n");

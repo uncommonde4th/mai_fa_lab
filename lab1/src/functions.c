@@ -13,7 +13,7 @@ int is_prime(int n){
         return 1;
 }
 
-void h_func(int x){
+void h_func(const int x){
         int t = 0;
         for (int i = 1; i <= 100; i++) {
                 if (i % x == 0){
@@ -27,7 +27,7 @@ void h_func(int x){
         printf("\n");
 }
 
-void p_func(int x){
+void p_func(const int x){
         if (x < 2){
                 printf("Число не простое и не составное");
         }
@@ -40,7 +40,7 @@ void p_func(int x){
         printf("\n");
 }
 
-void s_func(int x){
+void s_func(const int x){
         char x16[100];
         sprintf(x16, "%X", x);
         for (int i = 0; x16[i] != '\0'; i++){
@@ -49,7 +49,7 @@ void s_func(int x){
         printf("\n");
 }
 
-void e_func(int x){
+void e_func(const int x){
         if (x > 10){
                 printf("Для этого флага число должно быть не больше 10\n");
         }
@@ -68,12 +68,12 @@ void e_func(int x){
         }
 }
 
-void a_func(int x){
+void a_func(const int x){
         int sum = (x * (x + 1)) / 2;
         printf("%d\n", sum);
 }
 
-void f_func(int x){
+void f_func(const int x){
         int fact = 1;
         for (int i = 1; i <= x; i++){
                 fact *= i;
