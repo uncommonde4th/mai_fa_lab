@@ -1,5 +1,5 @@
 # CMake build directories
-/build/
+lab1/build/
 
 # Compiled object files
 *.o
