@@ -26,12 +26,12 @@ int main(){
                         free(N);
                         free(res);
                 }
-                res[i] = prime;
+                N[i] = prime;
         }
 
         printf("\n");
         for (int i = 0; i < T; i++){
-                printf("%d\n", res[i]);
+                printf("%d\n", N[i]);
         }
 
         free(N);
