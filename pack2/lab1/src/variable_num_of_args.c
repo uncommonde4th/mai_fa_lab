@@ -12,7 +12,7 @@ int gcd(int a, int b) {
         return a;
 }
 
-bool checkFinalRepresentation(int base, double num) {
+bool checkFinalRepresentation(const int base, const double num) {
         if (num== 0.0) { return true; }
 
         if (num == 1e-12) { return true; }
@@ -40,15 +40,15 @@ bool checkFinalRepresentation(int base, double num) {
         return temp == 1;
 }
 
-int checkFRVariableArgs(int base, int count, ...) {
-        if (base < 2) { return 1; }
+signed int checkFRVariableArgs(const int base, const int count, ...) {
+        if (base < 2) { return -1; }
 
         va_list args;
         va_start(args, count);
 
         double num = va_arg(args, double);
         for (int i = 0; i < count; i++) {
-                if (num >= 1.0) { return 2; }
+                if (num >= 1.0) { return i + 1; }
 
                 printf("%.7f ", num);
                 if (checkFinalRepresentation(base, num)) { 

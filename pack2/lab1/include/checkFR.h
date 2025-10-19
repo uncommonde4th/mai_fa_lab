@@ -3,6 +3,6 @@
 
 #include <stdarg.h>
 
-int checkFRVariableArgs(int base, int count, ...);
+signed int checkFRVariableArgs(const int base, const int count, ...);
 
 #endif
