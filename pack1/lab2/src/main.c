@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "prime.h"
+#include "../include/prime.h"
 
 int main(){
-        const int T;
+        int T;
         if (scanf("%d", &T) != 1 || T <= 0){
                 printf("Введите одно натуральное число T\n");
                 return 1;
