@@ -21,21 +21,21 @@ int memcmp(const void *str1, const void *str2, size_t n) {
 
     for (size_t i = 0; i < n; i++) {
         if (ptr1[i] != ptr2[i]) {
-            return 0;
+            return ptr1[i] - ptr2[i];
         }
     }
-    return 1;
+    return 0;
 }
 
 // Копирует n символов из src в dest.
 void *memcpy(void *dest, const void *src, size_t n) {
-    unsigned char *input = (unsigned char *)dest;
-    const unsigned char *output = (const unsigned char *)src;
+    unsigned char *d = (unsigned char *)dest;
+    const unsigned char *s = (const unsigned char *)src;
 
     for (size_t i = 0; i < n; i++) {
-        input[i] = output[i];
+        d[i] = s[i];
     }
-    return (void *)input;
+    return (void *)d;
 }
 
 // Копирует символ c (беззнаковый тип) в первые n символов строки, на которую указывает аргумент str.
