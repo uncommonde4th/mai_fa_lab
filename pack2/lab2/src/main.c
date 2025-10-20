@@ -50,9 +50,76 @@ int main() {
     printf("strncat passed\n");
 
     // strchr
-    const char *str = "Hello";
-    assert(strchr(str, 'l') == str + 2);
+    const char *str = "Hello World";
+    assert(strchr(str, 'W') == str + 6);
+    assert(strchr(str, 'X') == NULL);
+    assert(strchr(str, '\0') == str + 11);
+    printf("strchr passed\n");
+
+    // strncmp
+    assert(strncmp("Hello", "Hello", 5) == 0);
+    assert(strncmp("Hello", "HellO", 5) > 0);
+    assert(strncmp("Hello", "HellO", 4) == 0);
+    printf("strncmp passed\n");
+
+    // strncpy
+    char dest4[20];
+    assert(strncpy(dest4, "Hello", 5) == dest4);
+    assert(strncmp(dest4, "Hello", 5) == 0);
+    strncpy(dest4, "Hi", 5);
+    assert(dest4[0] == 'H' && dest4[1] == 'i' && dest4[2] == '\0' && dest4[4] == '\0');
+    strncpy(dest4, "Test", 4);
+    assert(strncmp(dest4, "Test", 4) == 0);
+    printf("strncpy passed\n");
+
+    // strcspn
+    assert(strcspn("Hello World", "aeiou") == 1);
+    assert(strcspn("Hello", "xyz") == 5);
+    assert(strcspn("Apple", "Aa") == 0);
+    printf("strcspn passed\n");
     
+    // strerror
+
+    // strlen
+    assert(strlen("Hello") == 5);
+    assert(strlen("") == 0);
+    assert(strlen("This is a longer string") == 23);
+    printf("strlen passed\n");
+
+    // strpbrk
+    const char *str2 = "Hello World";
+    assert(strpbrk(str2, "aeiou") == str2 + 1);
+    assert(strpbrk(str2, "xyz") == NULL);
+    assert(strpbrk(str2, "ol") == str2 + 2);
+    printf("strpbrk passed\n");
+
+    // strrchr
+    const char *str3 = "Hello World";
+    assert(strrchr(str3, 'l') == str3 + 9);
+    assert(strrchr(str3, 'x') == NULL);
+    assert(strrchr(str3, 'H') == str3);
+    printf("strrchr passed\n");
+
+    // strstr
+    const char *str4 = "Hello World Programming";
+    assert(strstr(str4, "World") == str4 + 6);
+    assert(strstr(str4, "Python") == NULL);
+    assert(strstr(str4, "") == str4);
+    printf("strstr passed\n");
+
+    // strtok
+    char s1[] = "one,two,three";
+    assert(strcmp(strtok(s1, ","), "one") == 0);
+    assert(strcmp(strtok(NULL, ","), "two") == 0);
+    assert(strcmp(strtok(NULL, ","), "three") == 0);
+    assert(strtok(NULL, ",") == NULL);
+    char s2[] = "a; b,c.d";
+    assert(strcmp(strtok(s2, "; ,."), "a") == 0);
+    assert(strcmp(strtok(NULL, "; ,."), "b") == 0);
+    char s3[] = ",,,";
+    assert(strtok(s3, ",") == NULL);
+    printf("strtok passed\n");
+
     return 0;
 }
 
