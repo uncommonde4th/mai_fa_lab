@@ -103,15 +103,19 @@ int strncmp(const char *str1, const char *str2, size_t n) {
 
 // Копирует до n символов из строки, на которую указывает src, в dest.
 char *strncpy(char *dest, const char *src, size_t n) {
-    if (dest == NULL || src == NULL) { return NULL; }
+    if (dest == NULL || src == NULL) { return dest; }
 
     char *d = dest;
     size_t i;
-    while (*d != '\0') { d++; }
-    for (int i = 0; i < n; i++) {
-        d[i] = src[i];
+    for (i = 0; i < n && src[i] != '\0'; i++) {
+        dest[i] = src[i];
     }
-    d[i] = '\0';
+
+    while (i < n) {
+        dest[i] = '\0';
+        i++;
+    }
+
     return dest;
 }
 
@@ -144,7 +148,7 @@ size_t strlen(const char *str) {
     if (str == NULL) { return 0; }
 
     const char *ptr = str;
-    size_t c;
+    size_t c = 0;
 
     while (*ptr != '\0') {
         c++;
@@ -223,7 +227,7 @@ char *strstr(const char *haystack, const char *needle) {
 char *strtok(char *str, const char *delim) {
    static char *next = NULL;
 
-   if (str == NULL) { next = str; }
+   if (str != NULL) { next = str; }
    if (next == NULL || *next == '\0') { return NULL; }
 
    char *start = next;
