@@ -20,7 +20,7 @@ int main() {
     printf("memcmp passed\n");
 
     // memcpy
-    char dest[20];
+    char dest[30];
     assert(memcpy(dest, "World", 5) == dest);
     assert(memcmp(dest, "World", 5) == 0);
     assert(memcpy(dest, "Test", 0) == dest);
@@ -38,6 +38,20 @@ int main() {
     printf("memset passed\n");
 
     //strncat
+    char dest1[20] = "Hello";
+    assert(strncat(dest1, " World", 6) == dest1);
+    assert(strcmp(dest1, "Hello World") == 0);
+    char dest2[20] = "Test";
+    assert(strncat(dest2, "123abc", 5) == dest2);
+    assert(strcmp(dest2, "Test123ab") == 0);
+    char dest3[20] = "Test";
+    assert(strncat(dest3, "", 5) == dest3);
+    assert(strcmp(dest3, "Test") == 0);
+    printf("strncat passed\n");
+
+    // strchr
+    const char *str = "Hello";
+    assert(strchr(str, 'l') == str + 2);
     
     return 0;
 }
