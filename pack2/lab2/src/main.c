@@ -79,7 +79,15 @@ int main() {
     printf("strcspn passed\n");
     
     // strerror
-
+    {
+        const char *str1 = strerror(0);
+        assert(strcmp(str1, "Success") == 0);
+        const char *str2 = strerror(2);
+        assert(strstr(str2, "file or directory") != NULL);
+        const char *str3 = strerror(999);
+        assert(strcmp(str3, "Неизвестная ошибка") == 0);
+        printf("strerror passed\n");
+    }
     // strlen
     assert(strlen("Hello") == 5);
     assert(strlen("") == 0);
