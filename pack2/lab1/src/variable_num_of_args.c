@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include "../include/checkFR.h"
 
 
@@ -40,27 +41,22 @@ bool checkFinalRepresentation(const int base, const double num) {
         return temp == 1;
 }
 
-signed int checkFRVariableArgs(const int base, const int count, ...) {
-        if (base < 2) { return -1; }
+ErrorCode checkFRVariableArgs(bool *result, const int base, const int count, ...) {
+        if (base < 2) { return ERROR_BAD_BASE; }
+        if (count < 1) { return ERROR_NOT_ENOUGH_ARGS; }
 
         va_list args;
         va_start(args, count);
 
         double num = va_arg(args, double);
         for (int i = 0; i < count; i++) {
-                if (num >= 1.0) { return i + 1; }
-
-                printf("%.7f ", num);
-                if (checkFinalRepresentation(base, num)) { 
-                        printf("имеет конечное представление в СС с основанием %d\n", base);
-                }
-                else {  
-                        printf("не имеет конечного представления в СС с основанием %d\n", base);
-                }
+                if (num >= 1.0 || num <= 0.0) { return ERROR_BAD_NUM; }
+                if (checkFinalRepresentation(base, num)) { result[i] = true; }
+                else { result[i] = false; }
                 num = va_arg(args, double);
         }
         va_end(args);
 
-        return 0;
+        return SUCCESS;
 }
 
