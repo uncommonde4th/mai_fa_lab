@@ -13,6 +13,10 @@ int main(int argc, char *argv[]) {
         int base = 2;
 
         bool *resultArray = (bool *)calloc(numOfArgs, sizeof(bool));
+        if (resultArray == NULL) {
+                printf("Ошибка: Не удалось выделить память\n");
+                return 1;
+        }
 
         ErrorCode res = checkFRVariableArgs(resultArray, base, numOfArgs, 0.5, 0.25, 0.00001, 0.8929310013);
 
@@ -28,7 +32,7 @@ int main(int argc, char *argv[]) {
                         break;
                 case SUCCESS:
                         printf("В системе счисления с основанием %d:\n", base);
-                        for (int i = 0; i < numOfArgs - 1; i++) {
+                        for (int i = 0; i < numOfArgs; i++) {
                                 if (resultArray[i]) {
                                         printf("\033[32mЧисло №%d имеет конечное представление\033[0m\n", i + 1);
                                 } else {
