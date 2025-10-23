@@ -138,17 +138,6 @@ size_t strcspn(const char *str1, const char *str2) {
     return count;
 }
 
-// Выполняет поиск во внутреннем массиве номера ошибки errnum и возвращает указатель на строку с сообщением об ошибке.
-char *strerror(int errnum) {
-    static char *error_messages[ERROR_COUNT] = ERROR_MESSAGES;
-    
-    if (errnum < 0 || errnum >= ERROR_COUNT) {
-        return "Неизвестная ошибка";
-    }
-    
-    return error_messages[errnum];
-}
-
 // Вычисляет длину строки str, не включая завершающий нулевой символ.
 size_t strlen(const char *str) {
     if (str == NULL) { return 0; }
