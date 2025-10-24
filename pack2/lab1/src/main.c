@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
         }
         
         int numOfArgs = 4;
-        int base = 2;
+        int base = 5;
 
         bool *resultArray = (bool *)calloc(numOfArgs, sizeof(bool));
         if (resultArray == NULL) {
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
                 return 1;
         }
 
-        ErrorCode res = checkFRVariableArgs(resultArray, base, numOfArgs, 0.5, 0.25, 0.00001, 0.8929310013);
+        ErrorCode res = checkFRVariableArgs(resultArray, base, numOfArgs, 0.5, 0.2, 0.00001, 0.8929310013);
 
         switch(res) {
                 case ERROR_BAD_NUM: 
@@ -41,6 +41,7 @@ int main(int argc, char *argv[]) {
                         }
                         break;
         }
+        free(resultArray);
 
         return 0;
 }
