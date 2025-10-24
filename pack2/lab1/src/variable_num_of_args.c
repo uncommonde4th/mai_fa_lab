@@ -11,7 +11,7 @@ int gcd(int a, int b) {
 }
 
 bool checkFinalRepresentation(const int base, const double num) {
-        if (num== 0.0) { return true; }
+        if (num == 0.0) { return true; }
 
         if (num == 1e-12) { return true; }
 

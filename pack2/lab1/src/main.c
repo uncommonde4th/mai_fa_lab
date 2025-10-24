@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
                 return 1;
         }
 
-        ErrorCode res = checkFRVariableArgs(resultArray, base, numOfArgs, 0.5, 0.2, 0.00001, 0.8929310013);
+        ErrorCode res = checkFRVariableArgs(resultArray, base, numOfArgs, 0.4, 0.2, 0.00001, 0.8929310013);
 
         switch(res) {
                 case ERROR_BAD_NUM: 
