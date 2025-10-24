@@ -13,10 +13,10 @@ int gcd(int a, int b) {
 bool checkFinalRepresentation(const int base, const double num) {
         if (num == 0.0) { return true; }
 
-        if (num == 1e-12) { return true; }
+        if (num <= 1e-12) { return true; }
 
 
-        const long long max_denominator = 1000000LL;
+        const long long max_denominator = 1000000;
         long long numerator = (long long)(num * max_denominator + 0.5);
         long long denominator = max_denominator;
 
