@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "../include/functions.h"
 
 // Выполняет поиск первого вхождения символа c (беззнаковый тип) в первых n байтах строки, на которую указывает аргумент str.
 void *memchr(const void *str, int c, size_t n) {
+    if (str == NULL) { return NULL; }
+
     const unsigned char *ptr = (const unsigned char *)str;
     unsigned char symbol = (unsigned char)c;
 
@@ -16,6 +20,8 @@ void *memchr(const void *str, int c, size_t n) {
 
 // Сравнивает первые n байтов str1 и str2.
 int memcmp(const void *str1, const void *str2, size_t n) {
+    if (str1 == NULL || str2 == NULL) { return 1; }
+
     const unsigned char *ptr1 = (const unsigned char *)str1;
     const unsigned char *ptr2 = (const unsigned char *)str2;
 
@@ -29,6 +35,8 @@ int memcmp(const void *str1, const void *str2, size_t n) {
 
 // Копирует n символов из src в dest.
 void *memcpy(void *dest, const void *src, size_t n) {
+    if (dest == NULL || src == NULL) { return NULL; }
+
     unsigned char *d = (unsigned char *)dest;
     const unsigned char *s = (const unsigned char *)src;
 
@@ -40,6 +48,8 @@ void *memcpy(void *dest, const void *src, size_t n) {
 
 // Копирует символ c (беззнаковый тип) в первые n символов строки, на которую указывает аргумент str.
 void *memset(void *str, int c, size_t n) {
+    if (str == NULL) { return NULL; }
+
     unsigned char *ptr = (unsigned char *)str;
     unsigned char symbol = (unsigned char)c;
 
@@ -156,9 +166,27 @@ size_t strlen(const char *str) {
 char *strpbrk(const char *str1, const char *str2) {
     if (str1 == NULL || str2 == NULL) { return NULL; }
 
+    bool *arrayStr2 = (bool*)calloc(sizeof(bool), 256);
+    if (arrayStr2 == NULL) { return "Ошибка выделения памяти"; }
     const char *ptr1 = str1;
+    const char *ptr2 = str2;
 
+    while (*ptr2 != '\0') {
+        arrayStr2[*ptr2] = 1;
+        ptr2++;
+    }
+    
     while (*ptr1 != '\0') {
+        if (arrayStr2[*ptr1]) {
+            return (char*)ptr1;
+        }
+        ptr1++;
+    }
+
+    free(arrayStr2);
+
+
+    /*while (*ptr1 != '\0') {
         const char *ptr2 = str2;
         while (*ptr2 != '\0') {
             if (*ptr1 == *ptr2) {
@@ -168,7 +196,7 @@ char *strpbrk(const char *str1, const char *str2) {
         }
         ptr1++;
     }
-
+    */
     return NULL;
 }
 
@@ -223,38 +251,29 @@ char *strtok(char *str, const char *delim) {
    static char *next = NULL;
 
    if (str != NULL) { next = str; }
-   if (next == NULL || *next == '\0') { return NULL; }
+   if (next == NULL) { return NULL; }
 
    char *start = next;
-   while (*start != '\0') {
-       const char *d = delim;
-       while (*d != '\0') {
-           if (*start == *d) { break; }
-           d++;
-       }
-       if (*d == '\0') { break; }
+   while (*start && strchr(delim, *start)) {
        start++;
    }
 
    if (*start == '\0') {
-       next = start;
+       next = NULL;
        return NULL;
    }
 
    char *end = start;
-   while (*end != '\0') {
-       const char *d = delim;
-       while (*d != '\0') {
-           if (*end == *d) {
-               *end = '\0';
-               next = end + 1;
-               return start;
-           }
-           d++;
-       }
+   while (*end && !strchr(delim, *end)) {
        end++;
    }
 
-   next = end;
+   if (*end) {
+       *end = '\0';
+       next = end + 1;
+   } else {
+       next = NULL;
+   }
+
    return start;
 }
