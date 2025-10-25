@@ -25,8 +25,8 @@ printFlags whatFlag(const char *flag);
 int romanFlag(int num, char *result);
 int argsRomanFlag(va_list args, char *result);
 
-int zekendorfFlag(int num, char *result);
-int argsZekendorf(va_list args, char *result);
+int zekendorfFlag(unsigned int num, char *result);
+int argsZekendorfFlag(va_list args, char *result);
 
 
 #endif

@@ -57,3 +57,56 @@ int argsRomanFlag(va_list args, char *result) {
 }
 
 
+// %Zr
+int zekendorfFlag(unsigned int num, char *result) {
+    if (num == 0) {
+        strcpy(result, "01");
+        return 2;
+    }
+
+    unsigned int fibi[47];
+    fibi[0] = 1;
+    fibi[1] = 2;
+    int k = 1;
+
+    for (int i = 2; i < 47; i++) {
+        unsigned int next = fibi[i - 1] + fibi[i - 2];
+        if (next < fibi[i - 1] || next > num) {
+            k = i - 1;
+            break;
+        }
+        fibi[i] = next;
+        k = i;
+    }
+
+    char otv[48];
+    int len = 0;
+    unsigned int temp = num;
+
+    for (int i = k; i >= 0; i--) {
+        if (temp >= fibi[i]) {
+            otv[len++] = '1';
+            temp -= fibi[i];
+        } else {
+            otv[len++] = '0';
+        }
+    }
+
+    int index = 0;
+    for (int i =0; i < len; i++) {
+        result[index++] = otv[len - i - 1];
+    }
+
+    result[index++] = '1';
+    result[index] = '\0';
+
+    return index;
+}
+
+int argsZekendorfFlag(va_list args, char *result) {
+    unsigned int arg = va_arg(args, unsigned int);
+
+    return zekendorfFlag(arg, result);
+}
+
+
