@@ -109,4 +109,66 @@ int argsZekendorfFlag(va_list args, char *result) {
     return zekendorfFlag(arg, result);
 }
 
+// %Cv / %CV
+int fromDecimalFlag(int base, int num, char *result, bool capitalize) {
+    if (base < 2 || base > 36) { base = 10; }
+    if (base == 10) { return sprintf(result, "%d", num); }
+    
+    if (num == 0) {
+        result[0] = '0';
+        result[1] = '\0';
+        return 1;
+    }
+    
+    char buff[34];
+    int i = 0;
+    bool negative = false;
 
+    if (num < 0) {
+        negative = true;
+        num = -num;
+    }
+
+    char letterType = capitalize ? 'A' : 'a';
+
+    while (num > 0) {
+        int digit = num % base;
+
+        if (digit < 10) {
+            buff[i] = digit + '0';
+        } else {
+            buff[i] = (digit - 10) + letterType;
+        }
+        num /= base;
+        i++;
+    }
+    
+    if (negative) { buff[i++] = '-'; }
+
+    char *ptr = result;
+
+    for (int k = i - 1; k >= 0; k--) {
+        *ptr = buff[k];
+        ptr++;
+    }
+
+    *ptr = '\0';
+
+    return ptr - result;
+}
+
+// %Cv
+int fromDecimalLower(va_list args, char *result) {
+    int num = va_arg(args, int);
+    int base = va_arg(args, int);
+
+    return fromDecimalFlag(base, num, result, false);
+}
+
+// %CV
+int fromDecimalUpper(va_list args, char *result) {
+    int num = va_arg(args, int);
+    int base = va_arg(args, int);
+
+    return fromDecimalFlag(base, num, result, true);
+}

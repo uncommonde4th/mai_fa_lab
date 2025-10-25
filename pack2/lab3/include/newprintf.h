@@ -28,5 +28,8 @@ int argsRomanFlag(va_list args, char *result);
 int zekendorfFlag(unsigned int num, char *result);
 int argsZekendorfFlag(va_list args, char *result);
 
+int fromDecimalFlag(int base, int num, char *result, bool capitalize);
+int fromDecimalLower(va_list args, char *result);
+int fromDecimalUpper(va_list args, char *result);
 
 #endif
