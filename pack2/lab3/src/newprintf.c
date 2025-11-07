@@ -48,26 +48,23 @@ PrintFlags whatFlag(const char *flag) {
 // %Ro
 int romanFlag(int num, char *result) {
     if (num <= 0 || num > 3999) {
-        int len = sprintf(result, "[%d]", num);
-        if (len < 0) { return 0; }
-        else { return len; }
+        return sprintf(result, "[%d]", num);
     }
 
-    const char *romanNums[] = { "M", "CM", "D", "CD", "C", "XC", "L", "X", "IX", "V", "IV", "I" };
+    const char *romanNums[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
     const unsigned int values[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
 
     char *ptr = result;
     for (int i = 0; i < 13; i++) {
         while (num >= values[i]) {
-            size_t len = strlen(romanNums[i]);
-            strncpy(ptr, romanNums[i], len);
-            ptr += len;
+            const char *roman = romanNums[i];
+            while (*roman) {
+                *ptr++ = *roman++;
+            }
             num -= values[i];
         }
     }
-
     *ptr = '\0';
-
     return ptr - result;
 }
 
@@ -200,7 +197,7 @@ int toDecimalFlag(const char *num, int base, char *output, bool capitalize) {
         base = 10;
     }
 
-    int result = 0;
+    long long result = 0;
     int sign = 1;
 
     const char *ptr = num;
@@ -218,14 +215,13 @@ int toDecimalFlag(const char *num, int base, char *output, bool capitalize) {
         if (tmp >= '0' && tmp <= '9') { value = tmp - '0'; }
         if (tmp >= 'a' && tmp <= 'z') { value = tmp - 'a' + 10; }
         if (tmp >= 'A' && tmp <= 'Z') { value = tmp - 'A' + 10; }
-        value = -1;
 
         if (value < 0 || value >= base) {
             result = 0;
             return sprintf(output, "%d", 0);
         }
 
-        if ((result > 0 && result > (INT_MAX - value) / base) || (result < 0)) {
+        if (result > (LLONG_MAX - value) / base) {
             result = 0;
             return sprintf(output, "%d", 0);
         }
@@ -234,7 +230,7 @@ int toDecimalFlag(const char *num, int base, char *output, bool capitalize) {
         ptr++;
     }
 
-    return sprintf(output, "%d", result * sign);
+    return sprintf(output, "%lld", (long long)(result * sign));
 }
 
 // %to
@@ -257,25 +253,19 @@ int toDecimalUpper(va_list args, char *output) {
 int dumpFlag(void *num, size_t typeSize, char *output) {
     unsigned char *bytes = (unsigned char*)num;
     char *ptr = output;
-    char buff[9];
 
     for (size_t i = 0; i < typeSize; i++) {
         for (int j = 7; j >= 0; j--) {
-            if (bytes[i] & (1 << j)) { *output++ = '1'; }
-            else { *output++ = '0'; }
+            *ptr++ = (bytes[i] & (1 << j)) ? '1' : '0';
         }
-        *output = '\0';
-        
-        strncpy(ptr, buff, 8);
-        ptr += 8;
-
-        if (i < typeSize - 1) { *ptr++ = ' '; }
+        if (i < typeSize - 1) {
+            *ptr++ = ' ';
+        }
     }
     *ptr = '\0';
     
     return ptr - output;
 }
-
 // %mi
 int dumpInt(va_list args, char *output) {
     int num = va_arg(args, int);
@@ -415,7 +405,7 @@ int oversprintf(char *str, const char *format, ...) {
             ptr++;
 
             if (*ptr == '%') {
-                *writePtr += *ptr;
+                *writePtr++ = *ptr;
                 ptr++;
                 continue;
             }
@@ -441,7 +431,7 @@ int oversprintf(char *str, const char *format, ...) {
             strncpy(writePtr, buff, tmpResult);
             writePtr += tmpResult;
         } else {
-            *writePtr += *ptr;
+            *writePtr++ = *ptr;
             ptr++;
         }
     }
