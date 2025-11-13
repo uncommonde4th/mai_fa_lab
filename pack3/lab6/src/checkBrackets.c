@@ -11,6 +11,9 @@ int check_brackets(const char *str) {
     for (int i = 0; str[i] != '\0'; i++){
         char c = str[i];
         if (c == '(' || c == '[' || c == '{' || c == '<') {
+            if (top >= SIZE_OF_STACK - 1) {
+                return -2;
+            }
             stack[++top] = c;
         } else if (c == ')' || c == ']' || c == '}' || c == '>') {
             if (top == -1 || !match(stack[top--], c)) {
