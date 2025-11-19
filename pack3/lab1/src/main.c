@@ -20,9 +20,10 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    char output[sizeof(unsigned int) * 8 + 1];
-    
-    unsigned int number = 1323241;
+    char output[sizeof(int) * 8 + 1];
+        
+    // от -2147483647 до 2147483647
+    int number = 2147483647;
 
     for (int i = 1; i < 6; i++) {
         printf("r = %d: ", i);

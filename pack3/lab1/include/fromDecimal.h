@@ -4,9 +4,9 @@
 typedef enum {
     SUCCESS,
     R_OUT_OF_RANGE,
-    NULL_OUTPUT
+    NULL_OUTPUT,
 } TypeError;
 
-TypeError fromDecimal(const unsigned int number, int r, char *output);
+TypeError fromDecimal(const int number, int r, char *output);
 
 #endif
