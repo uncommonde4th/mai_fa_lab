@@ -3,7 +3,6 @@
 
 int decrement(int number) {
     if (number == 0) { return -1; }
-    int mask = 1;
     
     int minus_one = ~0;
     
