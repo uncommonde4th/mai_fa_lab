@@ -1,4 +1,4 @@
-#include "../include/myVector.h"
+#include "../include/myVectorStr.h"
 // Доступ к вектору О(1)
 // Добавление элемента О(N)
 
