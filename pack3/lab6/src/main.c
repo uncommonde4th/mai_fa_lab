@@ -7,15 +7,15 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    const char *str = "(){{}<>}";
+    const char *str = "(){{}<>}}";
     int result = check_brackets(str);
 
     if(result == 1) {
         printf("Строка корректно сбалансирована по скобкам.\n");
     } else if (result == 0) {
         printf("Строка не сбалансирована по скобкам.\n");
-    } else if (result == -2) {
-        printf("Ошибка. Переполнение стека.\n");
+    } else if (result == -1) {
+        printf("Ошибка выделения памяти.\n");
     } else {
         printf("Ошибка при выполнении.\n");
     }
