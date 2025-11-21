@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 
 add_executable(main
         ../src/main.c
-        ../src/variable_num_of_args.c
+        ../src/myVector.c
 )
 
 target_include_directories(main PRIVATE include)
