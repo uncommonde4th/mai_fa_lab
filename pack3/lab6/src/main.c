@@ -2,12 +2,12 @@
 #include "../include/checkBrackets.h"
 
 int main(int argc, char *argv[]) {
-    if (argc != 1) {
-        printf("Программа не принимает аргументов!\n");
+    if (argc != 2) {
+        printf("Программа принимает один аргумент - строку для проверки!\n");
         return 1;
     }
-
-    const char *str = "(){{}<>}}";
+    
+    const char *str = argv[1];
     int result = check_brackets(str);
 
     if(result == 1) {
