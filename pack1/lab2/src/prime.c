@@ -1,35 +1,73 @@
-#include <math.h>
-#include "prime.h"
+#include "../include/prime.h"
 
-int is_prime(int n){
-        if (n < 2) return 0;
-        if (n == 2) return 1;
-        if (n % 2 == 0) return 0;
+ErrorCode max(const int* numbers, const int size, int* result)
+{
+    if (numbers == NULL || result == NULL || size < 0) {
+        return INVALID_ARGUMENTS;
+    }
 
-        int k = (int) sqrt((double) n);
-        for (int i = 3; i <= k; i += 2){
-                if (n % i == 0){
-                        return 0;
-                }
+    int max_number = numbers[0];
+    for (int i = 1; i < size; i++) {
+        if (numbers[i] > max_number) {
+            max_number = numbers[i];
         }
-        return 1;
+    }
+
+    *result = max_number;
+    return SUCCESS;
 }
 
-int find_prime(int n, int *res){
-        if (n <= 0){
-                return 1;
+
+ErrorCode generate_prime(const int max_index, int *result) {
+    if (max_index <= 0 || result == NULL) {
+        return INVALID_ARGUMENTS;
+    }
+    
+    result[0] = 2;
+    
+    if (max_index == 1) {
+        return SUCCESS;
+    }
+    
+    int count = 1;
+    int current = 3;
+    
+    while (count < max_index) {
+        int is_prime = 1;
+        
+        for (int i = 0; i < count; i++) {
+            if (result[i] * result[i] > current) {
+                break;
+            }
+            
+            if (current % result[i] == 0) {
+                is_prime = 0;
+                break;
+            }
         }
         
-        int count = 0;
-        int prime = 1;
-
-        while(count < n){
-                prime++;
-                if (is_prime(prime) == 1){
-                        count++;
-                }
+        if (is_prime) {
+            result[count] = current;
+            count++;
         }
-        *res = prime;
+        
+        if (current > INT_MAX - 2) {
+            return NOT_ABLE_TO_FIND_PRIME;
+        }
+        current += 2;
+    }
+    
+    return SUCCESS;
+}
 
-        return 0;
+ErrorCode check_input()
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != '\0' && c != EOF)
+    {
+        if (c != ' ') {
+            return INVALID_INPUT;
+        }
+    }
+    return SUCCESS;
 }
