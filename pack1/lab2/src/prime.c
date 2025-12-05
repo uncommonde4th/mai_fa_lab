@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <math.h>
 #include "../include/prime.h"
 
 ErrorCode max(const int* numbers, const int size, int* result)
@@ -19,42 +21,54 @@ ErrorCode max(const int* numbers, const int size, int* result)
 
 
 ErrorCode generate_prime(const int max_index, int *result) {
-    if (max_index <= 0 || result == NULL) {
+    if (max_index <= 0 || result == NULL || max_index > 1000000) {
         return INVALID_ARGUMENTS;
     }
-    
-    result[0] = 2;
-    
-    if (max_index == 1) {
-        return SUCCESS;
+
+    int border;
+    if (max_index < 6) {
+        border = 20;
+    } else {
+        border = (int)(max_index * log(max_index) * 1.2) + 100;
+    }
+
+    if (border < max_index) {
+        return NOT_ABLE_TO_FIND_PRIME;
+    }
+
+    char *mask = (char*)malloc(border + 1);
+    if (mask == NULL) {
+        return NOT_ABLE_TO_FIND_PRIME;
     }
     
-    int count = 1;
-    int current = 3;
+    mask[0] = mask[1] = 0;
+    for (int i = 2; i <= border; i++) {
+        mask[i] = 1;
+    }
+
+    for (int i = 2; i * i <= border; i++) {
+        if (mask[i]) {
+            for (int j = i * i; j <= border; j += i) {
+                mask[j] = 0;
+            }
+        }
+    }
     
-    while (count < max_index) {
-        int is_prime = 1;
-        
-        for (int i = 0; i < count; i++) {
-            if (result[i] * result[i] > current) {
-                break;
-            }
-            
-            if (current % result[i] == 0) {
-                is_prime = 0;
-                break;
-            }
-        }
-        
-        if (is_prime) {
-            result[count] = current;
+    int count = 0;
+    for (int i = 2; i <= border; i++) {
+        if (mask[i]) {
+            result[count] = i;
             count++;
+            if (count == max_index) {
+                break;
+            }
         }
-        
-        if (current > INT_MAX - 2) {
-            return NOT_ABLE_TO_FIND_PRIME;
-        }
-        current += 2;
+    }
+    
+    free(mask);     
+
+    if (count < max_index) {
+        return NOT_ABLE_TO_FIND_PRIME;
     }
     
     return SUCCESS;

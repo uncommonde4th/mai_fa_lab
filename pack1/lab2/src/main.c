@@ -45,6 +45,11 @@ int main(int argc, char *argv[]){
         }
 
         int* prime_numbers = (int*)calloc(max_number, sizeof(int));
+        if (prime_numbers == NULL) {
+                free(prime_numbers);
+                printf("Не удалось выделить память.\n");
+                return 1;
+        }
 
         if (generate_prime(max_number, prime_numbers) == 1) {
                 free(prime_numbers);
