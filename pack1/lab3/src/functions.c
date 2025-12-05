@@ -16,6 +16,10 @@ bool is_equal(const double epsilon, const double a, const double b){
 }
 
 ErrorCode q_func(const double e, const double a, const double b, const double c, double *root1, double *root2) {
+    if (e <= 0.000000000000001) {
+        return EPSILON_IS_TOO_SMALL;
+    }
+
     if (root1 == NULL || root2 == NULL) {
         return NULL_POINTER;
     }
@@ -70,6 +74,11 @@ ErrorCode t_func(const double e, const double a, const double b, const double c,
     if (a <= 0 || b <= 0 || c <= 0) {
         return INVALID_ARGUMENTS;
     }
+
+    if (e <= 0.000000000000001) {
+        return EPSILON_IS_TOO_SMALL;
+    }
+
     if (result == NULL) {
         return NULL_POINTER;
     }

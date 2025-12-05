@@ -77,6 +77,9 @@ int main(int argc, char *argv[]){
                         case SUCCESS:
                             printf("Ответ: два решения - %f и %f.\n", root1, root2);
                             break;
+                        case EPSILON_IS_TOO_SMALL:
+                            printf("Ошибка! Слишком маленькое эпсилон.\n");
+                            break;
                         case INF_ROOTS:
                             printf("Ответ: бесконечно много решений.\n");
                             break;
@@ -118,6 +121,9 @@ int main(int argc, char *argv[]){
                     } else {
                         printf("Числа не могут являться длинами сторон прямоугольного треугольника\n");
                     }
+                    break;
+                case EPSILON_IS_TOO_SMALL:
+                    printf("Ошибка! Слишком маленькое эпсилон.\n");
                     break;
                 case INVALID_ARGUMENTS:
                     printf("Длины сторон треугольника должны быть положительными числами.\n");

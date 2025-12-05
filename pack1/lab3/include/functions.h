@@ -12,7 +12,8 @@ typedef enum {
     NO_ROOTS,
     NEGATIVE_DISCRIMINANT,
     INF_ROOTS,
-    NOT_A_SQUARE_EQUATION
+    NOT_A_SQUARE_EQUATION,
+    EPSILON_IS_TOO_SMALL
 } ErrorCode;
 
 double double_abs(double x);
